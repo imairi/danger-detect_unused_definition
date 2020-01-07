@@ -1,3 +1,8 @@
+#!/usr/bin/ruby
+#encoding: utf-8
+
+require_relative "./unused"
+
 module Danger
   # This is your plugin class. Any attributes or methods you expose here will
   # be available from within your Dangerfile.
@@ -26,8 +31,12 @@ module Danger
     # A method that you can call from your Dangerfile
     # @return   [Array<String>]
     #
-    def warn_on_mondays
-      warn 'Trying to merge code on a Monday' if Date.today.wday == 1
-    end
+    #def warn_on_mondays
+    #  warn 'Trying to merge code on a Monday' if Date.today.wday == 1
+    #end
+
+    def detect
+      Unused.new.find
+    end 
   end
 end
