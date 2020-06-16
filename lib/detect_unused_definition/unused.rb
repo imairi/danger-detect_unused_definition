@@ -46,17 +46,37 @@ end
 class Unused
   def initialize 
     @results = []
+    @allowPaths = []
   end 
 
   def results
     @results
   end
 
-  def find
-    items = []
-    all_files = Dir.glob("**/*.swift").reject do |path|
-      File.directory?(path)
+  def allowPaths(paths)
+    paths.each do |path|
+      @allowPaths.push(path)
     end
+  end
+
+  def find
+    puts("allow -> #{@allowPaths}")
+    items = []
+
+    #rbfiles = File.join("**", "*.swift")
+    #brooklyn_files = Dir.glob(rbfiles, base: "brooklyn")
+    #puts("brooklyn_files: #{brooklyn_files}")
+    #all_files = brooklyn_files
+
+    brooklyn_files = Dir.glob("**/*.swift", base: "brooklyn").map{ |path|
+      File.join("brooklyn", path)
+    }
+    all_files = brooklyn_files
+    puts(all_files)
+
+    #all_files = Dir.glob("**/*.swift").reject do |path|
+    #  File.directory?(path)
+    #end
 
     all_files.each { |my_text_file|
       file_items = grab_items(my_text_file)
