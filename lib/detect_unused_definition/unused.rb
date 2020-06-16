@@ -45,7 +45,7 @@ end
 
 class Unused
   def initialize 
-    @results = [""]
+    @results = []
   end 
 
   def results
