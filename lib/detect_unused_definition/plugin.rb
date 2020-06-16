@@ -35,8 +35,11 @@ module Danger
     #  warn 'Trying to merge code on a Monday' if Date.today.wday == 1
     #end
 
-    def detect
+    def detect(text)
+      puts("imairi000 danger plugin testfunc func")
+      puts(text)
       Unused.new.find
     end 
+    
   end
 end
