@@ -44,6 +44,14 @@ class Item
 end
 
 class Unused
+  def initialize 
+    @results = [""]
+  end 
+
+  def results
+    @results
+  end
+
   def find
     items = []
     all_files = Dir.glob("**/*.swift").reject do |path|
@@ -75,7 +83,6 @@ class Unused
     storyboards = Dir.glob("**/*.storyboard")
 
     find_usages_in_files(all_files, xibs + storyboards, items)
-
   end  
 
   def ignore_files_with_regexps(files, regexps)
@@ -149,7 +156,10 @@ class Unused
 
     items = ignore_files_with_regexps(items, regexps)
 
-    puts items.map { |item| item.to_danger_output  }
+    #puts items.map { |item| item.to_danger_output  }
+    items.map { |item| 
+      @results.push(item.to_danger_output)
+    }
   end  
 
   def grab_items(file)
