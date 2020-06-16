@@ -10,7 +10,7 @@ module Danger
 
     def detect(text)
       unused = Unused.new
-      unused.allowPaths(["test", "test2"])
+      unused.allowPaths(["brooklyn/RIBs", "brooklyn/Screens"])
       unused.find
       unused.results.each do |result|
         unused = result.split(":")

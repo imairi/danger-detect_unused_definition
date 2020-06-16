@@ -1,3 +1,3 @@
 module DetectUnusedDefinition
-  VERSION = "0.1.24".freeze
+  VERSION = "0.1.26".freeze
 end

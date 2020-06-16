@@ -68,15 +68,22 @@ class Unused
     #puts("brooklyn_files: #{brooklyn_files}")
     #all_files = brooklyn_files
 
-    brooklyn_files = Dir.glob("**/*.swift", base: "brooklyn").map{ |path|
-      File.join("brooklyn", path)
-    }
-    all_files = brooklyn_files
-    puts(all_files)
+    if @allowPaths.length > 0
+      all_files = []
+      @allowPaths.each do |allowPath|
+        brooklyn_files = Dir.glob("**/*.swift", base: allowPath).map{ |path|
+          relativePath = File.join(allowPath, path)
+          all_files.push(relativePath)
+        }
+      end
+      puts(all_files)
+    else
+      all_files = Dir.glob("**/*.swift").reject do |path|
+        File.directory?(path)
+      end
+      puts(all_files) 
+    end
 
-    #all_files = Dir.glob("**/*.swift").reject do |path|
-    #  File.directory?(path)
-    #end
 
     all_files.each { |my_text_file|
       file_items = grab_items(my_text_file)
