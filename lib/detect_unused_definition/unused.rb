@@ -34,27 +34,15 @@ class Item
     @file
   end  
 
-  def to_s
-    serialize
-  end
-  def to_str
-    serialize
-  end
-
   def full_file_path
     Dir.pwd + '/' + @file
   end  
 
-  def serialize
-    "Item< #{@type.to_s.green} #{@name.to_s.yellow} [#{modifiers.join(" ").cyan}] from: #{@file}:#{@at}:0>"
-  end  
-
-  def to_xcode 
-    "#{full_file_path}:#{@at}:0: warning: #{@type.to_s} #{@name.to_s} is unused"
+  def to_danger_output
+    "#{@file}:#{@at}"
   end
-
-
 end
+
 class Unused
   def find
     items = []
@@ -81,7 +69,7 @@ class Unused
     items = items.uniq { |f| f.name }
     puts "Total unique items to be checked #{items.length}"
 
-    puts "Starting searching globally it can take a while".green
+    puts "Starting searching globally it can take a while"
 
     xibs = Dir.glob("**/*.xib")
     storyboards = Dir.glob("**/*.storyboard")
@@ -96,7 +84,6 @@ class Unused
 
   def ignoring_regexps_from_command_line_args
     regexps = []
-    should_skip_predefined_ignores = false
 
     arguments = ARGV.clone
     until arguments.empty?
@@ -105,21 +92,16 @@ class Unused
         regex = arguments.shift
         regexps += [regex]
       end  
-
-      if item == "--skip-predefined-ignores"
-        should_skip_predefined_ignores = true
-      end  
     end  
 
-    if not should_skip_predefined_ignores
-      regexps += [
-       "^Pods/",
-       "fastlane/",
-       "Tests.swift$",
-       "Spec.swift$",
-       "Tests/"
-     ]
-   end 
+    regexps += [
+     "^Pods/",
+     "^Carthage/",
+     "fastlane/",
+     "Tests.swift$",
+     "Spec.swift$",
+     "Tests/"
+   ]
 
    regexps
  end  
@@ -167,13 +149,7 @@ class Unused
 
     items = ignore_files_with_regexps(items, regexps)
 
-    if items.length > 0
-      if ARGV[0] == "xcode"
-        $stderr.puts "#{items.map { |e| e.to_xcode }.join("\n")}"
-      else
-        puts "#{items.map { |e| e.to_s }.join("\n ")}"
-      end
-    end  
+    puts items.map { |item| item.to_danger_output  }
   end  
 
   def grab_items(file)
@@ -188,31 +164,4 @@ class Unused
   end
 
 end  
-
-class String
-  def black;          "\e[30m#{self}\e[0m" end
-  def red;            "\e[31m#{self}\e[0m" end
-  def green;          "\e[32m#{self}\e[0m" end
-  def yellow;          "\e[33m#{self}\e[0m" end
-  def blue;           "\e[34m#{self}\e[0m" end
-  def magenta;        "\e[35m#{self}\e[0m" end
-  def cyan;           "\e[36m#{self}\e[0m" end
-  def gray;           "\e[37m#{self}\e[0m" end
-
-  def bg_black;       "\e[40m#{self}\e[0m" end
-  def bg_red;         "\e[41m#{self}\e[0m" end
-  def bg_green;       "\e[42m#{self}\e[0m" end
-  def bg_brown;       "\e[43m#{self}\e[0m" end
-  def bg_blue;        "\e[44m#{self}\e[0m" end
-  def bg_magenta;     "\e[45m#{self}\e[0m" end
-  def bg_cyan;        "\e[46m#{self}\e[0m" end
-  def bg_gray;        "\e[47m#{self}\e[0m" end
-
-  def bold;           "\e[1m#{self}\e[22m" end
-  def italic;         "\e[3m#{self}\e[23m" end
-  def underline;      "\e[4m#{self}\e[24m" end
-  def blink;          "\e[5m#{self}\e[25m" end
-  def reverse_color;  "\e[7m#{self}\e[27m" end
-end
-
 
