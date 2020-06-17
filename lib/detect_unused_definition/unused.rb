@@ -53,7 +53,7 @@ class Unused
     @results
   end
 
-  def allowPaths(paths)
+  def allowPaths=(paths)
     paths.each do |path|
       @allowPaths.push(path)
     end

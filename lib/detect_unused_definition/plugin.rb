@@ -6,11 +6,11 @@ require_relative "./unused"
 module Danger
   class DangerDetectUnusedDefinition < Plugin
 
-    attr_accessor :warnings
+    attr_accessor :allow_paths
 
     def detect(text)
       unused = Unused.new
-      unused.allowPaths(["brooklyn/RIBs", "brooklyn/Screens"])
+      unused.allowPaths = allow_paths
       unused.find
       unused.results.each do |result|
         unused = result.split(":")
