@@ -47,6 +47,7 @@ class Unused
   def initialize 
     @results = []
     @allowPaths = []
+    @denyPaths = []
   end 
 
   def results
@@ -59,8 +60,15 @@ class Unused
     end
   end
 
+  def denyPaths=(paths)
+    paths.each do |path|
+      @denyPaths.push(path)
+    end
+  end
+
   def find
     puts("allow -> #{@allowPaths}")
+    puts("deny -> #{@denyPaths}")
     items = []
 
     #rbfiles = File.join("**", "*.swift")

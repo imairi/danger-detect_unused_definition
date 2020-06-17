@@ -7,10 +7,12 @@ module Danger
   class DangerDetectUnusedDefinition < Plugin
 
     attr_accessor :allow_paths
+    attr_accessor :deny_paths
 
     def detect(text)
       unused = Unused.new
       unused.allowPaths = allow_paths.nil? ? [] : allow_paths
+      unused.denyPaths = deny_paths.nil? ? [] : deny_paths
       unused.find
       unused.results.each do |result|
         unused = result.split(":")
