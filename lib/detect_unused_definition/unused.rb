@@ -93,6 +93,7 @@ class Unused
     end
 
 
+    puts "Start searching locally unused definitions."
     all_files.each { |my_text_file|
       file_items = grab_items(my_text_file)
       file_items = filter_items(file_items)
@@ -112,7 +113,7 @@ class Unused
     items = items.uniq { |f| f.name }
     puts "Total unique items to be checked #{items.length}"
 
-    puts "Starting searching globally it can take a while"
+    puts "Start searching globally (it can take a while)"
 
     xibs = Dir.glob("**/*.xib")
     storyboards = Dir.glob("**/*.storyboard")
