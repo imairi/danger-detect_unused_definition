@@ -6,13 +6,18 @@ require_relative "./unused"
 module Danger
   class DangerDetectUnusedDefinition < Plugin
 
+    # set target directory paths.
+    # ex) ["SampleApp", "SampleAppTests"] 
     attr_accessor :allow_paths
+
+    # remove particular paths from Danger results. enable to use Regexp.
+    # ex) ["*Model.swift", "SampleAppTests/Stub/*"]
     attr_accessor :deny_paths
 
-    def detect(text)
+    def detect(test)
       unused = Unused.new
-      unused.allowPaths = allow_paths.nil? ? [] : allow_paths
-      unused.denyPaths = deny_paths.nil? ? [] : deny_paths
+      unused.allow_paths = allow_paths.nil? ? [] : allow_paths
+      unused.deny_paths = deny_paths.nil? ? [] : deny_paths
       unused.find
       unused.results.each do |result|
         unused = result.split(":")

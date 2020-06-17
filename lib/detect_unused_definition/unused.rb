@@ -46,29 +46,29 @@ end
 class Unused
   def initialize 
     @results = []
-    @allowPaths = []
-    @denyPaths = []
+    @allow_paths = []
+    @deny_paths = []
   end 
 
   def results
     @results
   end
 
-  def allowPaths=(paths)
+  def allow_paths=(paths)
     paths.each do |path|
-      @allowPaths.push(path)
+      @allow_paths.push(path)
     end
   end
 
-  def denyPaths=(paths)
+  def deny_paths=(paths)
     paths.each do |path|
-      @denyPaths.push(path)
+      @deny_paths.push(path)
     end
   end
 
   def find
-    puts("allow -> #{@allowPaths}")
-    puts("deny -> #{@denyPaths}")
+    puts("allow -> #{@allow_paths}")
+    puts("deny -> #{@deny_paths}")
     items = []
 
     #rbfiles = File.join("**", "*.swift")
@@ -76,20 +76,18 @@ class Unused
     #puts("brooklyn_files: #{brooklyn_files}")
     #all_files = brooklyn_files
 
-    if @allowPaths.length > 0
+    if @allow_paths.length > 0
       all_files = []
-      @allowPaths.each do |allowPath|
-        brooklyn_files = Dir.glob("**/*.swift", base: allowPath).map{ |path|
-          relativePath = File.join(allowPath, path)
-          all_files.push(relativePath)
+      @allow_paths.each do |allow_path|
+        brooklyn_files = Dir.glob("**/*.swift", base: allow_path).map{ |path|
+          relative_path = File.join(allow_path, path)
+          all_files.push(relative_path)
         }
       end
-      puts(all_files)
     else
       all_files = Dir.glob("**/*.swift").reject do |path|
         File.directory?(path)
       end
-      puts(all_files) 
     end
 
 
@@ -127,7 +125,7 @@ class Unused
 
   def ignoring_regexps_from_command_line_args
     regexps = []
-    regexps += @denyPaths
+    regexps += @deny_paths
 
     regexps
  end  
