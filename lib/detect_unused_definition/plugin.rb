@@ -10,7 +10,7 @@ module Danger
 
     def detect(text)
       unused = Unused.new
-      unused.allowPaths = allow_paths
+      unused.allowPaths = allow_paths.nil? ? [] : allow_paths
       unused.find
       unused.results.each do |result|
         unused = result.split(":")
