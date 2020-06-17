@@ -8,14 +8,14 @@ A description of danger-detect_unused_definition.
 
 ## Usage
 
-    Methods and attributes from this plugin are available in
-    your `Dangerfile` under the `detect_unused_definition` namespace.
+Methods and attributes from this plugin are available in
+your `Dangerfile` under the `detect_unused_definition` namespace.
     
-    ```
-    detect_unused_definition.allow_paths = ["SampleApp", "SampleAppTests"]
-    detect_unused_definition.deny_paths = ["Model/*"]
-    detect_unused_definition.detect
-    ```
+```
+detect_unused_definition.allow_paths = ["SampleApp", "SampleAppTests"]
+detect_unused_definition.deny_paths = ["Model/*"]
+detect_unused_definition.detect
+```
 
 ## Development
 
