@@ -127,26 +127,9 @@ class Unused
 
   def ignoring_regexps_from_command_line_args
     regexps = []
+    regexps += @denyPaths
 
-    arguments = ARGV.clone
-    until arguments.empty?
-      item = arguments.shift
-      if item == "--ignore"
-        regex = arguments.shift
-        regexps += [regex]
-      end  
-    end  
-
-    regexps += [
-     "^Pods/",
-     "^Carthage/",
-     "fastlane/",
-     "Tests.swift$",
-     "Spec.swift$",
-     "Tests/"
-   ]
-
-   regexps
+    regexps
  end  
 
   def find_usages_in_files(files, xibs, items_in)
