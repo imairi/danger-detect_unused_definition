@@ -14,7 +14,7 @@ module Danger
     # ex) ["*Model.swift", "SampleAppTests/Stub/*"]
     attr_accessor :deny_paths
 
-    def detect(test)
+    def detect
       unused = Unused.new
       unused.allow_paths = allow_paths.nil? ? [] : allow_paths
       unused.deny_paths = deny_paths.nil? ? [] : deny_paths
