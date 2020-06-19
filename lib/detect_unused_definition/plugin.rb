@@ -4,7 +4,7 @@
 require_relative "./unused"
 
 module Danger
-  class DangerDetectUnusedDefinition < Plugin
+  class DangerfileDetectUnusedDefinition < Plugin
 
     # set target directory paths.
     # ex) ["SampleApp", "SampleAppTests"] 
@@ -13,6 +13,17 @@ module Danger
     # remove particular paths from Danger results. enable to use Regexp.
     # ex) ["*Model.swift", "SampleAppTests/Stub/*"]
     attr_accessor :deny_paths
+
+    # The instance name used in the Dangerfile
+    # @return [String]
+    #
+    def self.instance_name
+      "detect_unused_definition"
+    end
+
+    def initialize(dangerfile)
+      super(dangerfile)
+    end
 
     def detect
       unused = Unused.new
